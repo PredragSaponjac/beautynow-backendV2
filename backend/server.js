@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const http = require('http');
+const http = require('http' );
 const socketIo = require('socket.io');
 
 // Load environment variables
@@ -11,7 +11,7 @@ dotenv.config();
 
 // Initialize Express app
 const app = express();
-const server = http.createServer(app);
+const server = http.createServer(app );
 const io = socketIo(server);
 
 // Middleware
@@ -81,16 +81,14 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// For local development, start the server
+// This won't run in Vercel's serverless environment
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
-// Add this at the end of your server.js file
-// Export for Vercel serverless function
+// Export the Express app for Vercel serverless function
 module.exports = app;
-
-
-// Export for testing
-module.exports = { app, server, io };
