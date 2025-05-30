@@ -87,5 +87,10 @@ server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+// Add this at the end of your server.js file
+// Export for Vercel serverless function
+module.exports = app;
+
+
 // Export for testing
 module.exports = { app, server, io };
