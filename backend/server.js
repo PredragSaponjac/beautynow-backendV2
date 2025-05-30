@@ -15,7 +15,11 @@ const server = http.createServer(app );
 const io = socketIo(server);
 
 // Middleware
-app.use(cors());
+// Updated CORS configuration to allow requests from frontend domains
+app.use(cors({
+  origin: ['https://beautynow-net.vercel.app', 'http://localhost:3000'],
+  credentials: true
+} ));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
